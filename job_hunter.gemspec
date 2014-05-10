@@ -2,9 +2,11 @@
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 
+require 'job_hunter/version'
+
 Gem::Specification.new do |gem|
   gem.name          = 'job_hunter'
-  gem.version       = '0.0.0'
+  gem.version       = JobHunter::VERSION
   gem.date          = '2014-05-09'
   gem.authors       = ['Ryan Moser']
   gem.email         = 'ryanpmoser@gmail.com'
