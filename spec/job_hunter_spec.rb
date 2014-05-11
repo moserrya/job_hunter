@@ -5,6 +5,10 @@ class KustomJob < Struct.new(:model_id, :details)
 
   def perform
   end
+
+  def self.remove_method(sym)
+    define_method(name) { super }
+  end
 end
 
 describe JobHunter do
@@ -79,5 +83,77 @@ describe JobHunter do
     it 'returns nil if there is nothing to destory' do
       expect(KustomJob.destroy model_id, details).to be_nil
     end
-  end  
+  end
+
+  context '.max_attempts' do
+    let(:attempts) { 3 }
+
+    it 'sets max attempts in an instance method of the same name' do
+      kustom_job = KustomJob.new
+      expect {
+        KustomJob.max_attempts attempts
+      }.to change{kustom_job.try(:max_attempts)}.from(nil).to(attempts)
+    end
+
+    after do
+      KustomJob.remove_method :max_attempts
+    end
+  end
+
+  context '.run_at' do
+    let(:default_time) { -> { DateTime.parse('April 23, 2015 07:23') } }
+    let(:override) { 6.hours.from_now }
+
+    before do
+      KustomJob.run_at default_time
+    end
+
+    it 'gives jobs the default run_at time' do
+      job = KustomJob.create
+      expect(job.run_at).to eq(default_time.call)
+    end
+
+    it 'allows overriding the default time' do
+      job = KustomJob.create run_at: override
+      expect(job.run_at).to eq(override)
+    end
+  end
+
+  context '.priority' do
+    let(:default_priority) { 37 }
+    let(:override) { 13 }
+
+    before do
+      KustomJob.priority default_priority
+    end
+
+    it 'gives jobs the default priority' do
+      job = KustomJob.create
+      expect(job.priority).to eq(default_priority)
+    end
+
+    it 'allows overriding the default priority' do
+      job = KustomJob.create priority: override
+      expect(job.priority).to eq(override)
+    end
+  end
+
+  context '.queue' do
+    let(:default_queue) { 'sugar_glider' }
+    let(:override) { 'sugar_moo' }
+
+    before do
+      KustomJob.queue default_queue
+    end
+
+    it 'gives jobs the default queue' do
+      job = KustomJob.create
+      expect(job.queue).to eq(default_queue)
+    end
+
+    it 'allows overriding the default queue' do
+      job = KustomJob.create queue: override
+      expect(job.queue).to eq(override)
+    end
+  end
 end
