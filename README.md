@@ -47,9 +47,11 @@ KustomJob.delete(model_id, details)
   
 ```
 
-All of these methods will return a `Delayed::Job` if it finds, creates, or destroys one and `nil` otherwise. 
+I recommend adding an index to `handler` in the `delayed_jobs` table if you plan on making regular use of `find` or `find_or_create`.
 
-The `create` and `find_or_create` methods accept the same options hash as `Delayed::Job.enqueue`. Options passed in to these methods will override the defauls set in your custom job class. Options passed in to `find_or_create` will not affect a job that is already enqueued.
+All of these methods will return a `Delayed::Job` if they find, create, or destroy a job and `nil` otherwise.
+
+The `create` and `find_or_create` methods accept the same options hash as `Delayed::Job.enqueue`. Options passed in to these methods (`run_at`, `queue`, and `priority`) will override the defauls set in your custom job class. Options passed in to `find_or_create` will not affect a job already enqueued.
 
 
 
