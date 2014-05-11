@@ -68,4 +68,17 @@ describe JobHunter do
       end
     end
   end
+
+  context '.destroy' do
+    it 'destroys the job, removing it from the queue' do
+      KustomJob.create model_id, details
+      expect {
+        KustomJob.destroy model_id, details
+      }.to change{Delayed::Job.count}.by(-1)
+    end
+
+    it 'returns nil if there is nothing to destory' do
+      expect(KustomJob.destroy model_id, details).to be_nil
+    end
+  end  
 end
