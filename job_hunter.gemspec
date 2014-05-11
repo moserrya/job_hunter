@@ -21,6 +21,7 @@ Gem::Specification.new do |gem|
 
   gem.add_dependency 'delayed_job', ['>= 3.0', '< 5.0']
 
-  gem.add_development_dependency "rake", '~> 10'
-  gem.add_development_dependency "rspec", '~> 3'
+  gem.add_development_dependency 'rake', '~> 10'
+  gem.add_development_dependency 'rspec', '~> 3'
+  gem.add_development_dependency 'sqlite3', '~> 1'
 end
