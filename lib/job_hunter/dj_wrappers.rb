@@ -1,7 +1,7 @@
 module JobHunter
   def create(*args)
-    options = args.last.is_a?(Hash) ? args.pop : {}
-    Delayed::Job.enqueue(new(*args), options)
+    options = args.extract_options!
+    Delayed::Job.enqueue(new(*args), _defaults_.merge(options))
   end
 
   def find(*args)
@@ -10,8 +10,8 @@ module JobHunter
   end
 
   def find_or_create(*args)
-    job_args = args.last.is_a?(Hash) ? args[0..-2] : args
-    find(*job_args) or create(*args)
+    options = args.extract_options!
+    find(*args) or create(*[args, options])
   end
 
   def destroy(*args)
