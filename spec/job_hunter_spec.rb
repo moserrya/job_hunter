@@ -20,10 +20,27 @@ describe JobHunter do
       }.to change{Delayed::Job.count}.by(1)
     end
 
+    it 'happily creates identical jobs' do
+      expect {
+        3.times { KustomJob.create model_id, details }
+      }.to change{Delayed::Job.count}.by(3)
+    end
+
     it 'works with an options hash' do
       expect {
         KustomJob.create model_id, details, options
       }.to change{Delayed::Job.count}.by(1)
+    end
+  end
+
+  context '#find' do
+    before do
+      custom_job = KustomJob.new model_id, details
+      @job = Delayed::Job.enqueue custom_job
+    end
+
+    it 'finds the job given the same arguments' do
+      expect(KustomJob.find(model_id, details)).to eq(@job)
     end
   end
 end
