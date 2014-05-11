@@ -1,5 +1,4 @@
 require 'spec_helper'
-require 'pry'
 
 class KustomJob < Struct.new(:model_id, :details)
   extend JobHunter
