@@ -13,4 +13,8 @@ module JobHunter
     job_args = args.last.is_a?(Hash) ? args[0..-2] : args
     find(*job_args) or create(*args)
   end
+
+  def destroy(*args)
+    find(*args).try(:destroy)
+  end
 end
