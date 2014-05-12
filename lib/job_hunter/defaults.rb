@@ -15,7 +15,6 @@ module JobHunter
     define_method(:max_attempts) { value }
   end
 
-  private
   def _defaults_
     { priority: @priority, 
       run_at: @run_at.try(:call),

@@ -1,20 +1,52 @@
 module JobHunter
+  def self.extended(klass)
+    klass.include(InstanceMethods)
+  end
+
   def create(*args)
-    options = args.extract_options!
-    Delayed::Job.enqueue(new(*args), _defaults_.merge(options))
+    new_with_options(*args).create
   end
 
   def find(*args)
-    handler = new(*args).to_yaml
-    Delayed::Job.where(handler: handler).first
+    new_with_options(*args).find
   end
 
   def find_or_create(*args)
-    options = args.extract_options!
-    find(*args) or create(*[args, options])
+    new_with_options(*args).find_or_create
   end
 
   def destroy(*args)
-    find(*args).try(:destroy)
+    new_with_options(*args).destroy
+  end
+
+  def new_with_options(*args)
+    options = args.extract_options!
+    job = new(*args)
+    job.define_singleton_method :_options_,
+      -> { self.class._defaults_.merge(options) }
+    job
+  end
+
+  module InstanceMethods
+    def find
+      Delayed::Job.where(handler: to_yaml).first
+    end
+
+    def create
+      Delayed::Job.enqueue(self, _options_)
+    end
+
+    def find_or_create
+      find || create
+    end
+
+    def destroy
+      find.try(:destroy)
+    end
+
+    private
+    def _options_
+      {}
+    end
   end
 end
