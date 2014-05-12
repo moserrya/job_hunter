@@ -31,7 +31,7 @@ end
 
 `run_at` accepts a Proc object. The value is evaluated when you enqueue a new custom job.
 
-JobHunter also provides a few methods to find, create, and destroy jobs:
+JobHunter also provides class methods to find, create, and destroy jobs:
 
 ```ruby
 model_id = 22
@@ -47,11 +47,34 @@ KustomJob.delete(model_id, details)
   
 ```
 
-I recommend adding an index to `handler` in the `delayed_jobs` table if you plan on making regular use of `find` or `find_or_create`.
+Adding an index to `handler` in the `delayed_jobs` table is recommended if you plan on making regular use of `find` or `find_or_create`.
 
 All of these methods will return a `Delayed::Job` if they find, create, or destroy a job and `nil` otherwise.
 
 The `create` and `find_or_create` methods accept the same options hash as `Delayed::Job.enqueue`. Options passed in to these methods (`run_at`, `queue`, and `priority`) will override the defauls set in your custom job class. Options passed in to `find_or_create` will not affect a job already enqueued.
 
+These class methods have corresponding instance methods:
 
+```ruby
+model_id = 22
+details  = "You seem to a have a squid on your head."
+
+custom_job = KustomJob.new model_id, details
+
+job.find
+
+job.create
+
+job.find_or_create
+
+job.delete
+```
+
+Unlike the identically named class methods, `#create` and `#find_or_create` do not take an options hash. However, you can still override defaults by initializing your class by using `new_with_options`:
+
+```ruby
+super_custom_job = KustomJob.new_with_options model_id, details, run_at: 12.minutes.from.now
+
+super_custom_job.create
+```
 
