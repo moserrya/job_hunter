@@ -22,8 +22,9 @@ module JobHunter
   def new_with_options(*args)
     options = args.extract_options!
     job = new(*args)
-    job.define_singleton_method :_options_,
-      -> { self.class._defaults_.merge(options) }
+    job.define_singleton_method(:_options_) do
+      self.class._defaults_.merge(options)
+    end
     job
   end
 
@@ -37,7 +38,7 @@ module JobHunter
     end
 
     def find_or_create
-      find || create
+      find or create
     end
 
     def destroy
