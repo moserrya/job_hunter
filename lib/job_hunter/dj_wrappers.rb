@@ -30,7 +30,7 @@ module JobHunter
 
   module InstanceMethods
     def find
-      Delayed::Job.where(handler: to_yaml).first
+      Delayed::Job.where(handler: to_yaml, failed_at: nil).first
     end
 
     def create
