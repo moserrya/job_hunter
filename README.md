@@ -51,6 +51,8 @@ Adding an index to `handler` in the `delayed_jobs` table is recommended if you p
 
 All of these methods will return a `Delayed::Job` if they find, create, or destroy a job and `nil` otherwise.
 
+`find` will not return failed jobs (all attempts exhausted). `find_or_create` will likewise create a new job if there is an identical failed job.
+
 The `create` and `find_or_create` methods accept the same options hash as `Delayed::Job.enqueue`. Options passed in to these methods (`run_at`, `queue`, and `priority`) will override the defauls set in your custom job class. Options passed in to `find_or_create` will not affect a job already enqueued.
 
 These class methods have corresponding instance methods:
