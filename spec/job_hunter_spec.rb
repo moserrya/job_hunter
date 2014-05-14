@@ -46,6 +46,11 @@ describe JobHunter do
     it 'finds the job given the same arguments' do
       expect(KustomJob.find(model_id, details)).to eq(@job)
     end
+
+    it 'does not find failed jobs' do
+      @job.touch(:failed_at)
+      expect(KustomJob.find(model_id, details)).to be_nil
+    end
   end
 
   context '.find_or_create' do
