@@ -1,7 +1,18 @@
 JobHunter
 ==========
 
-JobHunter is a library that cuts down on boilerplate when creating and finding [Delayed::Job](https://github.com/collectiveidea/delayed_job) custom jobs.
+JobHunter is a library that cuts down on boilerplate when creating and finding [Delayed::Job](https://github.com/collectiveidea/delayed_job) custom jobs. It replaces this:
+
+```ruby
+Delayed::Job.enqueue(MyCustomJob.new(data, other_data), priority: 100, run_at: 5.hours.from_now)
+```
+
+With this:
+
+```ruby
+MyCustomJob.create(data, other_data)
+```
+
 
 Installation
 -------
