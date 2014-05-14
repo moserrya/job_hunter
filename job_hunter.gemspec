@@ -7,7 +7,7 @@ require 'job_hunter/version'
 Gem::Specification.new do |gem|
   gem.name          = 'job_hunter'
   gem.version       = JobHunter::VERSION
-  gem.date          = '2014-05-09'
+  gem.date          = '2014-05-13'
   gem.authors       = ['Ryan Moser']
   gem.email         = 'ryanpmoser@gmail.com'
   gem.homepage      = 'https://github.com/moserrya/job_hunter'
