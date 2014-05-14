@@ -1,10 +1,6 @@
 require 'rspec'
-
-require 'active_support/dependencies'
 require 'active_record'
-
 require 'delayed_job_active_record'
-
 require 'job_hunter'
 
 ActiveRecord::Base.establish_connection adapter: 'sqlite3', database: ':memory:'
