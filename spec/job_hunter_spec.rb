@@ -14,8 +14,7 @@ end
 describe JobHunter do
   let(:model_id) { 47 }
   let(:details)  { 'Party Solver' }
-  let(:run_at)   { DateTime.parse('January 28, 2015 0800') }
-  let(:options)  { { run_at: run_at } }
+  let(:options)  { { priority: 7 } }
 
   context '.create' do
     it 'enqueues Delayed Jobs' do
