@@ -5,7 +5,7 @@ module JobHunter
 
   module InstanceMethods
     def find
-      Delayed::Job.where(handler: to_yaml, failed_at: nil).first
+      scope.first
     end
 
     def create
@@ -20,14 +20,8 @@ module JobHunter
       find.try(:destroy)
     end
 
-    def extend_or_create
-      if job = find
-        if run_at = self.class._defaults_[:run_at]
-          job.update_attributes run_at: run_at
-        end
-      else
-        create
-      end
+    def scope
+      Delayed::Job.where(handler: to_yaml, failed_at: nil)
     end
 
     private

@@ -123,27 +123,6 @@ describe JobHunter do
     end
   end
 
-  context '.extend_or_create' do
-    let(:default_time) { -> { DateTime.parse('April 23, 2015 07:23') } }
-    let(:old_time) { DateTime.parse('May 3, 2014 08:32') }
-
-    before do
-      KustomJob.run_at default_time
-      @job = KustomJob.create model_id, details, run_at: old_time
-    end
-
-    it 'changes the run_at time based on the default' do
-      KustomJob.extend_or_create model_id, details
-      expect(@job.reload.run_at).to eq(default_time.call)
-    end
-
-    it 'does not change the time if a default is not set' do
-      KustomJob.run_at nil
-      KustomJob.extend_or_create model_id, details
-      expect(@job.reload.run_at).to eq(old_time)
-    end
-  end
-
   context '.priority' do
     let(:default_priority) { 37 }
     let(:override) { 13 }
