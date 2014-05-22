@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    job_hunter (0.2.1)
+    job_hunter (0.3.0)
       delayed_job_active_record (>= 3.0, < 5.0)
 
 GEM
@@ -32,18 +32,18 @@ GEM
     json (1.8.1)
     minitest (5.3.3)
     rake (10.3.1)
-    rspec (3.0.0.beta2)
-      rspec-core (= 3.0.0.beta2)
-      rspec-expectations (= 3.0.0.beta2)
-      rspec-mocks (= 3.0.0.beta2)
-    rspec-core (3.0.0.beta2)
-      rspec-support (= 3.0.0.beta2)
-    rspec-expectations (3.0.0.beta2)
+    rspec (3.0.0.rc1)
+      rspec-core (= 3.0.0.rc1)
+      rspec-expectations (= 3.0.0.rc1)
+      rspec-mocks (= 3.0.0.rc1)
+    rspec-core (3.0.0.rc1)
+      rspec-support (= 3.0.0.rc1)
+    rspec-expectations (3.0.0.rc1)
       diff-lcs (>= 1.2.0, < 2.0)
-      rspec-support (= 3.0.0.beta2)
-    rspec-mocks (3.0.0.beta2)
-      rspec-support (= 3.0.0.beta2)
-    rspec-support (3.0.0.beta2)
+      rspec-support (= 3.0.0.rc1)
+    rspec-mocks (3.0.0.rc1)
+      rspec-support (= 3.0.0.rc1)
+    rspec-support (3.0.0.rc1)
     sqlite3 (1.3.9)
     thread_safe (0.3.3)
     tzinfo (1.1.0)
@@ -56,5 +56,5 @@ DEPENDENCIES
   delayed_job_active_record
   job_hunter!
   rake
-  rspec (= 3.0.0.beta2)
+  rspec (= 3.0.0.rc1)
   sqlite3 (~> 1)
