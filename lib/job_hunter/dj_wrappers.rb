@@ -17,7 +17,7 @@ module JobHunter
     end
 
     def destroy
-      scope.destroy_all.first
+      find.try(:destroy)
     end
 
     def scope
