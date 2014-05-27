@@ -18,6 +18,6 @@ module JobHunter
   def _defaults_
     { priority: @priority, 
       run_at:   @run_at.try(:call),
-      queue:    @queue }.select { |k, v| v }
+      queue:    @queue }.select { |_, v| v }
   end
 end
